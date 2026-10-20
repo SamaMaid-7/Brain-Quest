@@ -1,0 +1,165 @@
+BRAIN QUEST - CODE EXPLANATION AND VIVA NOTES
+=============================================
+
+1. PROJECT IDEA
+---------------
+Brain Quest is one application containing seven small games. The player starts at
+Level 1. If the player wins the currently unlocked level, the next level opens.
+If the player loses, the next level stays locked. This gives the project a clear
+goal and demonstrates conditions, classes, functions and graphics.
+
+2. HOW THE PROGRAM RUNS
+-----------------------
+A. main() starts the graphics window with initwindow().
+B. unlocked starts at 1, so only Level 1 is available.
+C. A menu is drawn with seven level names.
+D. getch() waits for a key. Keys 1-7 select levels and 0 exits.
+E. If the selected level is locked, the program shows a message.
+F. Otherwise, a Game pointer is assigned to the chosen game object.
+G. game->play() runs that game's challenge and returns true for a win or false for a loss.
+H. If the player wins the current unlocked level, unlocked increases by one.
+I. closegraph() closes the window when the player exits.
+
+3. IMPORTANT C++ CODE
+---------------------
+class Game {
+public:
+    virtual bool play() = 0;
+    virtual ~Game() {}
+};
+
+Game is the parent class. The play() function is pure virtual (= 0), which means
+Game is an abstract class and cannot be used to create a normal game object directly.
+Each child class provides its own play() function.
+
+class NumberGuess : public Game { ... };
+
+This means NumberGuess inherits from Game. The other six games do the same.
+
+Game* game = NULL;
+game = &game1;
+bool won = game->play();
+
+A Game pointer can point to any game object derived from Game. Because play() is
+virtual, the correct game's version runs. This is runtime polymorphism.
+
+if (won && level == unlocked && unlocked < 7)
+    unlocked++;
+
+This condition unlocks the next level only if:
+- the player won,
+- they played the currently unlocked level,
+- and the game is not already at the final level.
+
+4. GRAPHICS LIBRARY
+-------------------
+The code uses WinBGIm's graphics.h, a beginner-friendly graphics library commonly
+used for simple 2D graphics teaching on Windows. It provides functions to draw
+text, lines, rectangles and shapes in a window.
+
+The program uses:
+- initwindow(): open graphics window.
+- cleardevice(): clear current drawing.
+- setcolor(): choose drawing colour.
+- outtextxy(): draw text at an x,y coordinate.
+- line(): draw a line.
+- rectangle(): draw a rectangle.
+- fillellipse(): draw a filled oval/circle.
+- getch(): read a key press.
+- closegraph(): close the graphics window.
+
+5. LINE COUNT
+-------------
+The main.cpp file is approximately 220-250 lines, depending on blank lines and
+comments. Do not claim an exact number unless you count the file in your editor.
+In VS Code, open main.cpp and check the line/column indicator at the bottom.
+
+6. HOW TO EXPLAIN WHERE THE CODE CAME FROM
+------------------------------------------
+Be honest about your process. You can say:
+"I studied the requirements, used the graphics.h function documentation and C++
+class concepts, and wrote/adapted the code to make a simple seven-level game.
+I can explain the logic and have tested the parts I understand."
+Do not claim you wrote every line independently if that is not true. Make sure you
+understand and can reproduce the key parts before the viva.
+
+7. VIVA QUESTIONS AND SHORT ANSWERS
+-----------------------------------
+Q1. What is your project?
+A. Brain Quest is a C++ game with seven small brain challenges. Winning one level
+   unlocks the next level.
+
+Q2. Which language did you use?
+A. C++.
+
+Q3. Which graphics library did you use?
+A. WinBGIm graphics.h, which draws simple 2D shapes and text in a window.
+
+Q4. Why didn't you use a database?
+A. The game has only seven levels and temporary progress, so variables are enough.
+   Progress resets when the program closes.
+
+Q5. What is a class?
+A. A class is a blueprint that groups data and functions together.
+
+Q6. What is an object?
+A. An object is an instance of a class. For example, game1 is a NumberGuess object.
+
+Q7. What is inheritance?
+A. Inheritance lets a child class reuse and extend a parent class. Each game inherits
+   from Game.
+
+Q8. What is abstraction here?
+A. The Game class provides a common play() interface without specifying each game's
+   internal rules.
+
+Q9. What is polymorphism?
+A. The same call, game->play(), runs a different implementation depending on which
+   game object the pointer refers to.
+
+Q10. What is encapsulation?
+A. It means keeping related functions and data together in a class. The game logic
+    is grouped inside each game class.
+
+Q11. Why is play() virtual?
+A. So the program can call the correct child class's play() function through a
+   pointer to the parent class.
+
+Q12. What does bool mean?
+A. It is a Boolean type that stores true or false. Here, true means the player won.
+
+Q13. How does the unlock system work?
+A. unlocked starts at 1. When the player wins the currently unlocked level, the
+   value increases by one.
+
+Q14. What happens if a player selects a locked level?
+A. The program shows a message and returns to the menu.
+
+Q15. What does initwindow() do?
+A. It creates the graphics window.
+
+Q16. What does outtextxy() do?
+A. It draws text at the given x and y coordinates.
+
+Q17. What is the coordinate system?
+A. The top-left of the graphics window is approximately (0,0). x increases to the
+   right and y increases downward.
+
+Q18. What is a pointer?
+A. A pointer stores the address of an object. Here, Game* points to the selected
+   game object.
+
+Q19. Why use a switch statement?
+A. It chooses the correct game object based on the selected level number.
+
+Q20. What are the limitations?
+A. The mini-games are simplified, progress is not saved after closing, and the
+   graphics.h setup depends on a compatible Windows compiler.
+
+Q21. Can Live Server run this C++ program?
+A. No. Live Server serves web files. This project is a C++ desktop graphics program,
+   so it needs a C++ compiler and WinBGIm.
+
+Q22. How many lines of code are there?
+A. Approximately 220-250 lines including comments and blank lines. I would check
+   the exact count in my editor before giving an exact figure.
