@@ -1,73 +1,137 @@
-BRAIN QUEST - C++ OOP AND COMPUTER GRAPHICS
-===========================================
+BRAIN QUEST — CODE OVERVIEW
+===========================
 
-This is a beginner-level C++ project with seven small brain-game challenges.
-It uses OOP classes and the WinBGIm graphics.h library to draw a window, text,
-lines, rectangles and a circle. There is no database.
+AT A GLANCE
+-----------
+Project name:       Brain Quest
+Main source file:   main.cpp
+Source length:      402 lines
+Programming language: C++
+Graphics library:   WinBGIm / BGI (graphics.h)
+Platform:           Windows desktop application
+Input:              Mouse and keyboard
+Game structure:     7 mini-games with progressive level unlocking
+Code style:         Functions, a struct, arrays, loops, conditions, and variables
 
-IMPORTANT ABOUT LOCALHOST
--------------------------
-A C++ graphics.h program is a desktop application. VS Code Live Server only serves
-HTML/CSS/JavaScript files; it does not compile or run C++ graphics programs on localhost.
-Because your course requires C++ OOP and computer graphics, this project runs as a
-graphics window, not as a website. This is the simplest honest setup for graphics.h.
+LIBRARIES / HEADERS USED
+------------------------
+graphics.h   - Drawing shapes, text, buttons, and the game interface.
+winbgim.h    - WinBGIm support, including graphics-window and mouse features.
+conio.h      - Keyboard input functions such as kbhit() and getch().
+windows.h    - Windows-specific window functions, including maximize support.
+iostream     - Standard input/output streams.
+cstdlib      - General utilities, including random-number utilities.
+ctime        - Time-related functions, used to seed random behaviour.
+cstring      - C-style string utilities.
+string       - The C++ string type.
 
-REQUIREMENTS
-------------
-- Windows
-- Code::Blocks or another C++ compiler configured for WinBGIm
-- WinBGIm graphics.h library and its BGI linker library
+MAIN DATA STRUCTURES AND VARIABLES
+----------------------------------
+Button struct
+    Stores a button's position, size, label, fill colour, border colour,
+    and text colour.
 
-SETUP
------
-1. Extract this ZIP into a folder.
-2. Install Code::Blocks with MinGW, if not already installed.
-3. Configure WinBGIm (graphics.h and libbgi) for your compiler.
-4. Create/open a C++ Console project and add main.cpp.
-5. Add these linker options if required by your WinBGIm package:
-   -lbgi -lgdi32 -lcomdlg32 -luuid -loleaut32 -lole32
-6. Build and Run.
+unlockedLevel
+    Tracks the highest level unlocked during the current run.
 
-VS CODE
--------
-You can open the extracted folder in VS Code to read/edit the source code. However,
-VS Code alone does not provide a C++ compiler or graphics.h. You must configure the
-compiler and WinBGIm library. The exact steps vary by installation.
+totalScore
+    Tracks the score accumulated during the current run.
 
-GAMES
------
-1. Number Guess
-2. Memory Match
-3. Word Scramble
-4. Tic-Tac-Toe mini puzzle
-5. Code Breaker
-6. Lights Out mini puzzle
-7. Sudoku mini row puzzle
+quitGame
+    Indicates when the user chooses to exit.
 
-The games are deliberately small practice challenges, not full commercial games.
-The unlock state is held in memory and resets when the program closes.
-
-OOP CONCEPTS
-------------
-- Class: Game and the seven game classes.
-- Object: game1, game2, etc. created in main().
-- Inheritance: each game class inherits from Game.
-- Abstraction: Game defines the common play() function.
-- Polymorphism: a Game pointer calls the correct derived class's play() function.
-- Encapsulation: each game's play logic is kept inside its class.
-
-COMPUTER GRAPHICS CONCEPTS
+IMPORTANT HELPER FUNCTIONS
 --------------------------
-- initwindow() creates the graphics window.
-- setcolor() selects a drawing colour.
-- line() draws lines.
-- rectangle() draws rectangles and the game boards.
-- outtextxy() displays text at coordinates.
-- fillellipse() draws the light in Lights Out.
-- cleardevice() clears the screen.
-- closegraph() closes the graphics window.
+textAt()
+    Draws text at a specified position.
 
-APPROXIMATE LINE COUNT
-----------------------
-main.cpp is roughly 220-250 lines depending on whether blank lines and comments
-are counted. Your editor's line counter gives the exact count for your copy.
+centeredText()
+    Draws horizontally centred text.
+
+drawButton()
+    Draws a button and its label.
+
+inside()
+    Checks whether a coordinate falls inside a button.
+
+clickAt()
+    Checks for a mouse click and reads its position.
+
+waitKeyOrClick()
+    Waits for keyboard input or a mouse click.
+
+clearScreen()
+    Clears the graphics screen and draws the screen heading.
+
+messageScreen()
+    Displays a result or status message.
+
+pauseForContinue()
+    Shows a message and waits for the player to continue.
+
+THE SEVEN GAMES — SHORT EXPLANATIONS
+------------------------------------
+
+LEVEL 1 — NUMBER GUESSING (Easy)
+The computer chooses a number from 1 to 100. The player has a limited
+number of attempts and receives a hint saying whether the target is
+higher or lower after a wrong guess.
+
+LEVEL 2 — MEMORY MATCH (Easy)
+The player reveals two cards at a time and searches for matching pairs.
+The goal is to find all pairs before reaching the move limit.
+
+LEVEL 3 — WORD SCRAMBLE (Easy)
+The letters of a word are shuffled. The player types the correct word.
+The level contains five words and allows limited attempts.
+
+LEVEL 4 — TIC-TAC-TOE (Easy–Medium)
+The player competes against the computer on a 3×3 grid. The aim is to
+make a row, column, or diagonal of three matching symbols.
+
+LEVEL 5 — CODE BREAKER (Medium)
+The player tries to discover a hidden sequence of four coloured pegs.
+Feedback helps identify colours that are correct and/or in the correct
+positions. The code must be found within the allowed guesses.
+
+LEVEL 6 — LIGHTS OUT PUZZLE (Medium)
+Selecting a square toggles that square and its neighbouring lights.
+The goal is to switch all lights off within the move limit.
+
+LEVEL 7 — SUDOKU CHALLENGE (Final level)
+The player fills the empty cells in a 9×9 Sudoku grid. Every row,
+column, and 3×3 box must contain the digits 1–9 without repetition.
+
+HOW THE GAME FLOW WORKS
+-----------------------
+1. The main menu displays the available levels.
+2. Level 1 is unlocked at the start.
+3. The player chooses an unlocked level using the mouse or keyboard.
+4. The selected game's function runs and checks whether the player wins.
+5. Winning updates the score and unlocks the next level.
+6. The player returns to the menu to continue.
+7. Progress and score are held in memory and reset when the program closes.
+
+OOP / PROGRAMMING CONCEPTS TO MENTION
+-------------------------------------
+- struct: Button groups related button information into one type.
+- Functions: Each game and reusable interface task is separated into a
+  function, making the program easier to read and maintain.
+- Arrays: Used where a game needs a collection of values, such as boards
+  or cards.
+- Loops: Repeat turns, input checks, and board operations.
+- Conditions: Check guesses, matching pairs, winning states, and level
+  unlocking.
+- Variables: Keep track of choices, attempts, moves, score, and progress.
+- Randomness: Used for games that need a random number, card arrangement,
+  or secret code.
+
+NOTES
+-----
+This is a Windows desktop program, not a browser website. The graphical
+interface is drawn by WinBGIm using graphics.h. The code requests a
+maximized graphics window, but the exact window behaviour can depend on
+the installed WinBGIm version and the computer's display settings.
+
+Line count refers to the current main.cpp file and will change if the
+source code is edited.
